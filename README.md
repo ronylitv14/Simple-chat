@@ -7,19 +7,12 @@
 1. [Getting started](#getting-started)
 2. [Authentication](#authentication)
 3. [Thread Endpoints](#thread-endpoints)
-    - [Create or Retrieve Thread](#create-or-retrieve-thread)
-    - [Remove Thread](#remove-thread)
-    - [List Threads](#list-threads)
 4. [Message Endpoints](#message-endpoints)
-    - [Create Message](#create-message)
-    - [List Messages](#list-messages)
-    - [Mark Message as Read](#mark-message-as-read)
-    - [Unread Messages Count](#unread-messages-count)
 ---
 
 ## Getting Started
 
-Follow the next guide to setup the application
+Follow the next guide to set up the application
 
 ### 1. **Prerequisites**
 
@@ -195,7 +188,7 @@ Creates a new thread with specified participants. If a thread with the exact set
     ```
 
 **Example Request:**
-```json
+```
 POST /api/threads/
 Content-Type: application/json
 
@@ -347,7 +340,7 @@ Sends a new message within a specified thread. The authenticated user is automat
     ```
 
 **Example Request:**
-```json
+```
 POST /api/messages/
 Content-Type: application/json
 
@@ -388,8 +381,7 @@ Retrieves a paginated list of messages within a specific thread. Only accessible
                 "thread": 10,
                 "created": "2024-04-01T13:00:00Z",
                 "is_read": false
-            },
-            // More messages...
+            }
         ]
     }
     ```
