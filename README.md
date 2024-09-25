@@ -35,6 +35,12 @@ cd Simple-chat
 ### 3. **Prepare the Environment**
 
 Ensure that the `db_test_data.json` file is present in the root directory of project. This file contains the necessary test data that will be loaded into the Docker container during setup.
+Ensure you have added `.env` file like is stated in `.env-example`
+
+```
+SECRET_KEY=some-secret-django-key
+JWT_LIFETIME=10
+```
 
 ### 4. **Build the Docker Image**
 
