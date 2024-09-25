@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
+
 from ...models import Message
 from ...api.serializers import MessageSerializer
 

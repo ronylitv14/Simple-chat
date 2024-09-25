@@ -32,7 +32,7 @@ class TestThreadEndpoints:
         response = api_client.post(
             path=url,
             data={
-                'participants': [default_user1.id, default_user2.id]
+                'participants': [default_user2.id]
             }
         )
         assert response.status_code == status.HTTP_201_CREATED

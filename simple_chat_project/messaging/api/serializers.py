@@ -14,21 +14,28 @@ class ThreadSerializer(serializers.ModelSerializer):
         fields = ['participants', 'created', 'updated']
 
     def validate(self, attrs):
-        participants = attrs.get("participants")
-        unique_participants = set(participants)
+        participants = set(attrs.get("participants", []))
+        request = self.context.get("request")
+        user = request.user
+
+        if not participants:
+            raise serializers.ValidationError("There should be at least 1 participant.")
+
+        participants.add(user)
 
         if len(participants) > 2:
-            raise serializers.ValidationError("A thread must have exactly 2 participants.")
-        if len(unique_participants) != len(participants):
-            raise serializers.ValidationError("A thread must contain unique participants.")
+            raise serializers.ValidationError("A thread must have exactly 2 unique participants.")
+
+        attrs["participants"] = list(participants)
         return attrs
 
     def create(self, validated_data):
         participants = validated_data.pop('participants')
+        participants = set(participants)
 
         existing_threads = Thread.objects.filter(participants__in=participants).distinct()
         for thread in existing_threads:
-            if set(thread.participants.all()) == participants:
+            if participants == set(thread.participants.all()):
                 return thread
         thread = Thread.objects.create()
         thread.participants.set(participants)

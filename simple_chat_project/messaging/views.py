@@ -69,10 +69,10 @@ class MessageViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         thread_id = self.request.query_params.get('thread_id')
         if thread_id:
-            return Message.objects.filter(
+            return self.queryset.filter(
                 thread_id=thread_id,
                 thread__participants=self.request.user)
-        return Message.objects.none()
+        return self.queryset.exclude(sender=self.request.user, is_read=False)[:100]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -80,7 +80,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
-        thread_id = serializer.data.get("thread_id")
+        thread_id = serializer.data.get("thread")
         if thread_id:
             Thread.objects.filter(pk=thread_id).update(updated=datetime.now())
 
