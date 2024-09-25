@@ -1,5 +1,4 @@
-from datetime import datetime
-
+from django.utils import timezone
 from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
@@ -81,8 +80,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
 
         thread_id = serializer.data.get("thread")
-        if thread_id:
-            Thread.objects.filter(pk=thread_id).update(updated=datetime.now())
+        Thread.objects.filter(pk=thread_id).update(updated=timezone.now())
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
