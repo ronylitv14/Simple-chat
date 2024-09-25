@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block content %}
+    <div class="block block-form">
+        <form class="form" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn form-btn" type="submit">Register</button>
+        </form>
+    </div>
+{% endblock %}
